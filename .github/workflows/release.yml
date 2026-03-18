@@ -118,6 +118,36 @@ jobs:
             --clobber
           echo "✅ Bootstrap ZIP uploaded to release"
 
+      - name: Build and upload full ZIP
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          VERSION="${{ needs.detect-version.outputs.version }}"
+          TAG="v${VERSION}"
+
+          mkdir -p /tmp/full/coach-gravity/.agent/workflows
+          # Copy all content
+          cp README.md /tmp/full/coach-gravity/
+          cp -R getting-started /tmp/full/coach-gravity/
+          cp -R reference /tmp/full/coach-gravity/
+          cp -R starter-kit /tmp/full/coach-gravity/
+          cp -R project-planning /tmp/full/coach-gravity/
+          cp -R images /tmp/full/coach-gravity/ 2>/dev/null || true
+          cp -R delivery /tmp/full/coach-gravity/ 2>/dev/null || true
+          # Copy the start workflow
+          cp .agent/workflows/start.md /tmp/full/coach-gravity/.agent/workflows/
+          # Copy docs-canonical
+          cp -R docs-canonical /tmp/full/coach-gravity/ 2>/dev/null || true
+
+          cd /tmp/full
+          zip -r "coach-gravity-full-v${VERSION}.zip" coach-gravity/ -x "*.DS_Store"
+          cd -
+
+          gh release upload "$TAG" \
+            "/tmp/full/coach-gravity-full-v${VERSION}.zip" \
+            --clobber
+          echo "✅ Full ZIP uploaded to release"
+
   # ── Step 3: Publish to npm ─────────────────────────────────────────────
   publish-npm:
     needs: [detect-version, create-release]

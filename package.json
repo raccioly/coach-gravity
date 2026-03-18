@@ -1,6 +1,6 @@
 {
   "name": "coach-gravity",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "AI-assisted coaching toolkit that teaches non-programmers how to build real software using Antigravity",
   "license": "MIT",
   "author": "Ricardo Accioly <raccioly@github.com>",
