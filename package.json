@@ -1,0 +1,32 @@
+{
+  "name": "coach-gravity",
+  "version": "1.0.0",
+  "description": "AI-assisted coaching toolkit that teaches non-programmers how to build real software using Antigravity",
+  "license": "MIT",
+  "author": "Ricardo Accioly <raccioly@github.com>",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/raccioly/coach-gravity"
+  },
+  "keywords": [
+    "antigravity",
+    "ai-coaching",
+    "coding-assistant",
+    "learn-to-code",
+    "workflows",
+    "skills",
+    "docguard"
+  ],
+  "bin": {
+    "coach-gravity": "./bin/cli.js"
+  },
+  "files": [
+    "bin/",
+    "content/getting-started/",
+    "content/reference/",
+    "content/starter-kit/",
+    "content/project-planning/",
+    "content/delivery/",
+    "content/README.md"
+  ]
+}

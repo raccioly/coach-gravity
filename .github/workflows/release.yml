@@ -1,0 +1,123 @@
+name: Coach Gravity Release
+
+# Triggers on push to main — detects version bumps automatically
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'package.json'
+
+permissions:
+  contents: write
+
+jobs:
+  # ── Step 1: Detect if version changed ──────────────────────────────────
+  detect-version:
+    runs-on: ubuntu-latest
+    outputs:
+      version: ${{ steps.check.outputs.version }}
+      changed: ${{ steps.check.outputs.changed }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+
+      - name: Check if version changed
+        id: check
+        run: |
+          CURRENT=$(node -p "require('./package.json').version")
+          PREVIOUS=$(git show HEAD~1:package.json 2>/dev/null | node -p "JSON.parse(require('fs').readFileSync('/dev/stdin','utf-8')).version" 2>/dev/null || echo "0.0.0")
+          echo "current=$CURRENT"
+          echo "previous=$PREVIOUS"
+          if [ "$CURRENT" != "$PREVIOUS" ]; then
+            echo "version=$CURRENT" >> "$GITHUB_OUTPUT"
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+            echo "✅ Version changed: $PREVIOUS → $CURRENT"
+          else
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+            echo "⏭️ Version unchanged ($CURRENT), skipping release"
+          fi
+
+  # ── Step 2: Create git tag + GitHub Release ────────────────────────────
+  create-release:
+    needs: detect-version
+    if: needs.detect-version.outputs.changed == 'true'
+    runs-on: ubuntu-latest
+    outputs:
+      tag: v${{ needs.detect-version.outputs.version }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Create and push tag
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          VERSION="${{ needs.detect-version.outputs.version }}"
+          TAG="v${VERSION}"
+
+          if git rev-parse "$TAG" >/dev/null 2>&1; then
+            echo "Tag $TAG already exists, skipping"
+            exit 0
+          fi
+
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git tag -a "$TAG" -m "Release $TAG"
+          git push origin "$TAG"
+          echo "✅ Tag $TAG created and pushed"
+
+      - name: Generate release notes from CHANGELOG
+        id: notes
+        run: |
+          VERSION="${{ needs.detect-version.outputs.version }}"
+          NOTES=$(awk "/^## \\[${VERSION}\\]/{found=1; next} /^## \\[/{if(found) exit} found{print}" CHANGELOG.md)
+          if [ -z "$NOTES" ]; then
+            NOTES="Release v${VERSION} — see CHANGELOG.md for details."
+          fi
+          echo "$NOTES" > /tmp/release-notes.md
+          echo "✅ Release notes extracted"
+
+      - name: Create GitHub Release
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          VERSION="${{ needs.detect-version.outputs.version }}"
+          TAG="v${VERSION}"
+          gh release create "$TAG" \
+            --title "Coach Gravity $TAG" \
+            --notes-file /tmp/release-notes.md \
+            --latest
+
+      - name: Build and upload bootstrap ZIP
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          VERSION="${{ needs.detect-version.outputs.version }}"
+          TAG="v${VERSION}"
+
+          mkdir -p /tmp/bootstrap/coach-gravity/.agent/workflows
+          cp .agent/workflows/start.md /tmp/bootstrap/coach-gravity/.agent/workflows/
+          cp dist/bootstrap/coach-gravity/README.md /tmp/bootstrap/coach-gravity/
+          cd /tmp/bootstrap
+          zip -r "coach-gravity-bootstrap-v${VERSION}.zip" coach-gravity/ -x "*.DS_Store"
+
+          gh release upload "$TAG" \
+            "coach-gravity-bootstrap-v${VERSION}.zip" \
+            --clobber
+          echo "✅ Bootstrap ZIP uploaded to release"
+
+  # ── Step 3: Publish to npm ─────────────────────────────────────────────
+  publish-npm:
+    needs: [detect-version, create-release]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          registry-url: 'https://registry.npmjs.org'
+
+      - name: Publish
+        run: npm publish
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}

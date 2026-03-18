@@ -1,0 +1,14 @@
+# Exclude heavy assets from npm package
+content/images/
+dist/
+specs/
+docs-canonical/
+docs-implementation/
+archive/
+.specify/
+.docguard.json
+DRIFT-LOG.md
+CHANGELOG.md
+AGENTS.md
+*.zip
+*.tgz

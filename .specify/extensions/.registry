@@ -1,0 +1,13 @@
+{
+  "schema_version": "1.0",
+  "extensions": {
+    "docguard": {
+      "version": "0.9.8",
+      "source": "local",
+      "manifest_hash": "sha256:c06482b7fba68b4dab7faf0cfdebc32f3753ce1d4983cba60cc12b6be11ac448",
+      "enabled": true,
+      "registered_commands": {},
+      "installed_at": "2026-03-17T15:40:09.222631+00:00"
+    }
+  }
+}

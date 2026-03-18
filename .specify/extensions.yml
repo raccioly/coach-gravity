@@ -1,0 +1,28 @@
+installed: []
+settings:
+  auto_execute_hooks: true
+hooks:
+  after_implement:
+  - extension: docguard
+    command: speckit.docguard.guard
+    enabled: true
+    optional: true
+    prompt: Run DocGuard validation after implementation?
+    description: "Quality gate \u2014 ensures docs stay in sync with code"
+    condition: null
+  before_tasks:
+  - extension: docguard
+    command: speckit.docguard.review
+    enabled: true
+    optional: true
+    prompt: Review documentation consistency before generating tasks?
+    description: ''
+    condition: null
+  after_tasks:
+  - extension: docguard
+    command: speckit.docguard.score
+    enabled: true
+    optional: true
+    prompt: Show CDD maturity score after task generation?
+    description: ''
+    condition: null
