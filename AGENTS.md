@@ -7,7 +7,7 @@
 
 ## Project Overview
 
-<!-- What this project is, in 2-3 sentences -->
+Coach Gravity is an AI-assisted coaching toolkit (npm package) that teaches non-programmers how to build real software. It distributes the Super Antigravity toolkit — 20 specialist agents, 38 domain skills, 37 slash command workflows, validation scripts, and global AI configuration — via `npx coach-gravity install`.
 
 ## Project Documentation (CDD)
 
@@ -22,9 +22,10 @@ This project uses Canonical-Driven Development. Key locations:
 
 | Command | Purpose |
 |---------|---------|
-| <!-- e.g. npm install --> | Install dependencies |
-| <!-- e.g. npm run dev --> | Start development server |
-| <!-- e.g. npm test --> | Run unit tests |
+| `node bin/cli.js install` | Test full install locally |
+| `node bin/cli.js init` | Test per-project setup locally |
+| `node bin/cli.js update` | Test update path locally |
+| `npm publish` | Publish to npm (automated via GitHub Actions) |
 
 ## DocGuard — Documentation Enforcement
 
@@ -77,12 +78,16 @@ This auto-creates required documentation from templates. Then review and fill in
 
 ## Code Conventions
 
-<!-- Project-specific style rules -->
+- **Language**: JavaScript (Node.js, no TypeScript)
+- **Style**: CommonJS (`require`), no build step
+- **CLI Entry**: `bin/cli.js` — single file, cross-platform (macOS + Windows)
+- **Content**: All distributable content lives in `content/` directory
+- **Safe installs**: Never overwrite existing user files without `--force` flag
 
 ## File Change Rules
 
 - Changes to >3 files require explicit approval
-- Schema/data model changes require `DATA-MODEL.md` update
 - New dependencies require justification
 - Never commit without explicit approval
 - Documentation changes must pass `docguard guard` before commit
+- Version bumps auto-trigger GitHub Actions release pipeline
