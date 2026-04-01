@@ -5,19 +5,24 @@
  *
  * Usage:
  *   npx coach-gravity install     — Full setup (workflows, skill, DocGuard, configs)
- *   npx coach-gravity update      — Update existing installation
+ *   npx coach-gravity update      — Update existing installation (preserves configs)
+ *   npx coach-gravity init        — Set up per-project files in current directory
  *   npx coach-gravity uninstall   — Remove Coach Gravity from global config
  */
 
 const { execSync } = require("child_process");
 const fs = require("fs");
 const path = require("path");
+const os = require("os");
 
-const HOME = process.env.HOME || process.env.USERPROFILE;
+// ── Cross-platform home directory detection ──────────────────────────────
+const HOME = os.homedir();
 if (!HOME) {
-  console.error("❌ Could not determine home directory. Set $HOME and retry.");
+  console.error("❌ Could not determine home directory.");
   process.exit(1);
 }
+
+const IS_WINDOWS = process.platform === "win32";
 
 const GEMINI_DIR = path.join(HOME, ".gemini");
 const ANTIGRAVITY_DIR = path.join(GEMINI_DIR, "antigravity");
@@ -40,6 +45,7 @@ function copyDir(src, dest) {
     const srcPath = path.join(src, entry.name);
     const destPath = path.join(dest, entry.name);
     if (entry.name === ".DS_Store") continue;
+    if (entry.name === "Thumbs.db") continue;
     if (entry.isDirectory()) {
       copyDir(srcPath, destPath);
     } else {
@@ -67,8 +73,56 @@ function countFiles(dir, ext) {
   return count;
 }
 
+// ── Cross-platform command detection ─────────────────────────────────────
+function commandExists(cmd) {
+  try {
+    if (IS_WINDOWS) {
+      execSync(`where ${cmd}`, { stdio: "ignore" });
+    } else {
+      execSync(`command -v ${cmd}`, { stdio: "ignore" });
+    }
+    return true;
+  } catch {
+    return false;
+  }
+}
+
+// ── Safe config install — never overwrite existing files ─────────────────
 function installGlobalConfigs() {
   log("📋 Installing global config files...");
+  const globalDir = path.join(CONTENT_DIR, "starter-kit", "global");
+  const files = ["GEMINI.md", "CLAUDE.md", "agreement.md"];
+  let installed = 0;
+  let skipped = 0;
+  for (const file of files) {
+    const src = path.join(globalDir, file);
+    const dest = path.join(GEMINI_DIR, file);
+    if (!fs.existsSync(src)) continue;
+
+    if (fs.existsSync(dest)) {
+      skipped++;
+      log(`  ⏭️  ${file} already exists — keeping your version`);
+    } else {
+      copyFile(src, dest);
+      installed++;
+    }
+  }
+  if (installed > 0) {
+    log(`  ✅ ${installed} config files installed to ${GEMINI_DIR}`);
+  }
+  if (skipped > 0) {
+    log(
+      `  ℹ️  ${skipped} config files preserved (use 'npx coach-gravity install --force' to overwrite)`
+    );
+  }
+  if (installed === 0 && skipped === 0) {
+    log("  ⚠️ No config sources found — skipping");
+  }
+}
+
+// ── Force config install — overwrites existing files (opt-in) ────────────
+function installGlobalConfigsForce() {
+  log("📋 Installing global config files (force)...");
   const globalDir = path.join(CONTENT_DIR, "starter-kit", "global");
   const files = ["GEMINI.md", "CLAUDE.md", "agreement.md"];
   let installed = 0;
@@ -76,6 +130,12 @@ function installGlobalConfigs() {
     const src = path.join(globalDir, file);
     const dest = path.join(GEMINI_DIR, file);
     if (fs.existsSync(src)) {
+      // Back up existing file before overwriting
+      if (fs.existsSync(dest)) {
+        const backupPath = dest + ".backup";
+        fs.copyFileSync(dest, backupPath);
+        log(`  📦 Backed up existing ${file} → ${file}.backup`);
+      }
       copyFile(src, dest);
       installed++;
     }
@@ -175,12 +235,12 @@ Follow the guided onboarding workflow:
   log(`  ✅ Coach Gravity skill installed (${totalFiles} files) to ${SKILL_DIR}`);
 }
 
+// ── Cross-platform DocGuard detection ────────────────────────────────────
 function installDocGuard() {
   log("🛡️ Checking DocGuard...");
-  try {
-    execSync("command -v docguard", { stdio: "ignore" });
+  if (commandExists("docguard")) {
     log("  ✅ DocGuard already installed");
-  } catch {
+  } else {
     log("  📦 Installing DocGuard CLI...");
     try {
       execSync("npm i -g docguard-cli", { stdio: "inherit" });
@@ -191,7 +251,88 @@ function installDocGuard() {
   }
 }
 
+// ── Per-project init command ─────────────────────────────────────────────
+function init() {
+  console.log("");
+  console.log("  ╔═══════════════════════════════════════════╗");
+  console.log("  ║     Coach Gravity — Project Setup         ║");
+  console.log("  ║   Set up AI agent config for this project ║");
+  console.log("  ╚═══════════════════════════════════════════╝");
+  console.log("");
+
+  const cwd = process.cwd();
+  let installed = 0;
+  let skipped = 0;
+
+  // 1. Install AGENT-REFERENCE.md
+  const agentRefSrc = path.join(
+    CONTENT_DIR,
+    "starter-kit",
+    "per-project",
+    "AGENT-REFERENCE.md"
+  );
+  const agentRefDest = path.join(cwd, "AGENT-REFERENCE.md");
+  if (fs.existsSync(agentRefSrc)) {
+    if (fs.existsSync(agentRefDest)) {
+      skipped++;
+      log("⏭️  AGENT-REFERENCE.md already exists — keeping yours");
+    } else {
+      copyFile(agentRefSrc, agentRefDest);
+      installed++;
+      log("✅ AGENT-REFERENCE.md created — fill in your project details");
+    }
+  }
+
+  // 2. Create .agent/workflows/ directory with start.md
+  const agentWorkflowDir = path.join(cwd, ".agent", "workflows");
+  const startSrc = path.join(__dirname, "..", ".agent", "workflows", "start.md");
+  const startDest = path.join(agentWorkflowDir, "start.md");
+  if (fs.existsSync(startSrc)) {
+    if (fs.existsSync(startDest)) {
+      skipped++;
+      log("⏭️  .agent/workflows/start.md already exists — keeping yours");
+    } else {
+      fs.mkdirSync(agentWorkflowDir, { recursive: true });
+      copyFile(startSrc, startDest);
+      installed++;
+      log("✅ .agent/workflows/start.md installed — type /start to begin");
+    }
+  }
+
+  // 3. Create docs-canonical directory structure (if missing)
+  const docsDir = path.join(cwd, "docs-canonical");
+  if (!fs.existsSync(docsDir)) {
+    fs.mkdirSync(docsDir, { recursive: true });
+    fs.writeFileSync(
+      path.join(docsDir, "README.md"),
+      "# Canonical Documentation\n\n> Source of truth for design intent. Read-only for AI agents.\n\nAdd your architecture, data model, and product docs here.\n"
+    );
+    installed++;
+    log("✅ docs-canonical/ directory created");
+  } else {
+    skipped++;
+    log("⏭️  docs-canonical/ already exists — keeping yours");
+  }
+
+  console.log("");
+  if (installed > 0) {
+    log(`🎉 ${installed} project files set up!`);
+  }
+  if (skipped > 0) {
+    log(`ℹ️  ${skipped} files already existed and were preserved`);
+  }
+  console.log("");
+  log("Next steps:");
+  log("  1. Edit AGENT-REFERENCE.md with your project details");
+  log("  2. Type /start in the chat to begin building");
+  console.log("");
+}
+
+// ── Main commands ────────────────────────────────────────────────────────
+
 function install() {
+  const forceConfigs = process.argv.includes("--force");
+
   console.log("");
   console.log("  ╔═══════════════════════════════════════════╗");
   console.log("  ║       Coach Gravity Installer             ║");
@@ -199,7 +340,11 @@ function install() {
   console.log("  ╚═══════════════════════════════════════════╝");
   console.log("");
 
-  installGlobalConfigs();
+  if (forceConfigs) {
+    installGlobalConfigsForce();
+  } else {
+    installGlobalConfigs();
+  }
   installGlobalWorkflows();
   installSkill();
   installDocGuard();
@@ -208,11 +353,11 @@ function install() {
   log("🎉 Coach Gravity installed!");
   console.log("");
   log("To get started:");
-  log("  1. Open any project folder in Antigravity");
-  log('  2. Type /coach-gravity in the chat');
-  log("  3. Follow the guided onboarding");
+  log("  1. Open any project folder in your AI coding agent");
+  log("  2. Run: npx coach-gravity init");
+  log("  3. Type /start in the chat");
   console.log("");
-  log("Or type /start in any project to begin the full course.");
+  log("Or type /coach-gravity in any project to begin.");
   console.log("");
 }
 
@@ -223,7 +368,7 @@ function update() {
   installSkill();
   console.log("");
   log("✅ Updated! Global configs were NOT overwritten.");
-  log("   To update configs too, run: npx coach-gravity install");
+  log("   To reset configs: npx coach-gravity install --force");
   console.log("");
 }
 
@@ -251,6 +396,9 @@ switch (command) {
   case "update":
     update();
     break;
+  case "init":
+    init();
+    break;
   case "uninstall":
     uninstall();
     break;
@@ -259,9 +407,11 @@ switch (command) {
     console.log("  Coach Gravity — AI Coaching Toolkit");
     console.log("");
     console.log("  Usage:");
-    console.log("    npx coach-gravity install     Full setup");
-    console.log("    npx coach-gravity update      Update workflows & skill");
-    console.log("    npx coach-gravity uninstall   Remove Coach Gravity");
+    console.log("    npx coach-gravity install         Full global setup");
+    console.log("    npx coach-gravity install --force  Reset global configs to defaults");
+    console.log("    npx coach-gravity init             Set up current project");
+    console.log("    npx coach-gravity update           Update workflows & skill");
+    console.log("    npx coach-gravity uninstall        Remove Coach Gravity");
     console.log("");
     break;
 }

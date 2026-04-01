@@ -14,14 +14,8 @@ Before anything else, check if Coach Gravity content is available:
 
 // turbo
 ```bash
-# Check if Coach Gravity is installed as a skill or local content
-if [ -d "$HOME/.gemini/antigravity/skills/coach-gravity/getting-started" ]; then
-    echo "COACH_GRAVITY_SOURCE=$HOME/.gemini/antigravity/skills/coach-gravity"
-elif [ -d "getting-started" ]; then
-    echo "COACH_GRAVITY_SOURCE=."
-else
-    echo "COACH_GRAVITY_NOT_FOUND"
-fi
+# Cross-platform check — works on macOS, Linux, and Windows
+node -e "const os=require('os'),path=require('path'),fs=require('fs'); const skill=path.join(os.homedir(),'.gemini','antigravity','skills','coach-gravity','getting-started'); if(fs.existsSync(skill)){console.log('COACH_GRAVITY_SOURCE='+path.join(os.homedir(),'.gemini','antigravity','skills','coach-gravity'))} else if(fs.existsSync('getting-started')){console.log('COACH_GRAVITY_SOURCE=.')} else{console.log('COACH_GRAVITY_NOT_FOUND')}"
 ```
 
 **If COACH_GRAVITY_NOT_FOUND**:
@@ -102,16 +96,11 @@ fi
 ### Phase 3: Global Configuration
 
 11. Set up global config files:
-    - Check if `~/.gemini/GEMINI.md` already exists
-    - If not, create the directory and copy files:
+    - Check if global config files already exist — **never overwrite user customizations**
+    - If they don't exist, create the directory and copy files:
       ```bash
-      mkdir -p ~/.gemini
-      ```
-    - Copy from Coach Gravity source (detected in bootstrap check):
-      ```bash
-      cp $COACH_GRAVITY_SOURCE/starter-kit/global/GEMINI.md ~/.gemini/
-      cp $COACH_GRAVITY_SOURCE/starter-kit/global/CLAUDE.md ~/.gemini/
-      cp $COACH_GRAVITY_SOURCE/starter-kit/global/agreement.md ~/.gemini/
+      # Cross-platform — works on macOS, Linux, and Windows
+      node -e "const os=require('os'),path=require('path'),fs=require('fs'); const dir=path.join(os.homedir(),'.gemini'); fs.mkdirSync(dir,{recursive:true}); const src=process.argv[1]; ['GEMINI.md','CLAUDE.md','agreement.md'].forEach(f=>{const d=path.join(dir,f); if(!fs.existsSync(d)){fs.copyFileSync(path.join(src,'starter-kit','global',f),d); console.log('✅ Installed '+f)} else{console.log('⏭️  '+f+' exists — keeping yours')}})" $COACH_GRAVITY_SOURCE
       ```
     - Explain what these files do:
       ```
@@ -130,9 +119,9 @@ fi
 
 // turbo
 12. Install DocGuard documentation quality tool:
-    - Check if DocGuard is already installed:
+    - Check if DocGuard is already installed (cross-platform):
       ```bash
-      command -v docguard &> /dev/null && echo "DocGuard already installed" || npm i -g docguard-cli
+      npx -y docguard-cli --version || npm i -g docguard-cli
       ```
     - Explain what DocGuard does:
       ```
@@ -151,8 +140,8 @@ fi
 13. Install all 25 global workflows:
     - Create the global workflows directory and copy all workflow files:
       ```bash
-      mkdir -p ~/.gemini/antigravity/global_workflows
-      cp $COACH_GRAVITY_SOURCE/starter-kit/per-project/.agent/workflows/*.md ~/.gemini/antigravity/global_workflows/
+      # Cross-platform — works on macOS, Linux, and Windows
+      node -e "const os=require('os'),path=require('path'),fs=require('fs'); const dest=path.join(os.homedir(),'.gemini','antigravity','global_workflows'); fs.mkdirSync(dest,{recursive:true}); const src=path.join(process.argv[1],'starter-kit','per-project','.agent','workflows'); if(fs.existsSync(src)){const files=fs.readdirSync(src).filter(f=>f.endsWith('.md')); files.forEach(f=>fs.copyFileSync(path.join(src,f),path.join(dest,f))); console.log('✅ '+files.length+' workflows installed')} else{console.log('⚠️  Workflow source not found')}" $COACH_GRAVITY_SOURCE
       ```
     - Explain what these are:
       ```
