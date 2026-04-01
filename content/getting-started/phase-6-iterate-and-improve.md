@@ -6,7 +6,7 @@
 
 > **🏁 Ready Check — Can I skip this section?**
 >
-> ✅ Skip if: You're familiar with the 25 slash commands and know how to run quality workflows
+> ✅ Skip if: You're familiar with the 37 slash commands and know how to run quality workflows
 > 📖 Read if: You've never used `/preflight`, `/sentinel`, or `/architect`
 >
 > At minimum, read the **Enterprise-Ready Quality Gates** section — it teaches you how to make your code professional enough for a client's enterprise architect to review.
@@ -27,11 +27,11 @@ Antigravity makes this cycle fast — measured in minutes, not days. Here's how 
 
 ---
 
-## Your Toolbox: The 25 Slash Commands
+## Your Toolbox: The 37 Slash Commands
 
 ![Your slash command toolbox](/images/lessons/p6-slash-commands.png)
 
-Think of slash commands as **specialist team members** you can call in at any time. You don't need to use all 25 — most people use 5-8 regularly and dip into others as needed.
+Think of slash commands as **specialist team members** you can call in at any time. You don't need to use all 37 — most people use 5-8 regularly and dip into others as needed.
 
 ### The "Daily Drivers" (Use These All the Time)
 
@@ -41,6 +41,18 @@ Think of slash commands as **specialist team members** you can call in at any ti
 | `/preflight` | Runs automated quality checks before deploying | Before every deployment or commit |
 | `/courier` | Commits your code, runs checks, and deploys | When you're ready to save and push |
 | `/stage` | Opens a real browser and clicks through your app | When you want to test user flows |
+| `/status` | Project health dashboard | Quick overview of where things stand |
+
+### The "Builders" (Creating & Planning)
+
+| Command | What It Does | When to Use |
+|---|---|---|
+| `/brainstorm` | Explores 3+ options with pros/cons before deciding | Before starting something new |
+| `/create` | Scaffolds a new app from scratch with AI agents | Starting a brand new project |
+| `/plan` | Creates detailed task breakdown with estimates | Before implementing a feature |
+| `/enhance` | Adds NEW features to existing app | When you want to add something |
+| `/debug` | Systematic hypothesis-driven investigation | When something is broken |
+| `/orchestrate` | Coordinates 3+ agents for complex tasks | Big features needing multiple specialists |
 
 ### The "Specialists" (Call When Needed)
 
@@ -49,10 +61,12 @@ Think of slash commands as **specialist team members** you can call in at any ti
 | `/architect` | Reviews your entire project architecture | Before major features or after big changes |
 | `/sentinel` | Security scan — finds vulnerabilities | Before deploying, especially with user data |
 | `/critic` | Code quality review — checks every file | When you want a comprehensive review |
-| `/bolt` | Performance optimization — makes things faster | When your app feels slow |
+| `/bolt` | Performance optimization — makes existing code faster | When your app feels slow |
 | `/palette` | UX improvements — makes the interface better | When the look needs polishing |
+| `/ui-ux-pro-max` | Professional UI design with 50 styles and 21 palettes | When you need stunning design |
 | `/tester` | Checks test health — missing tests, flaky tests | When you want better test coverage |
 | `/medic` | Dependency health — outdated or vulnerable packages | Monthly, or when something breaks |
+| `/deploy` | Production deployment with pre-flight + health checks | When deploying to production |
 
 ### The "Deep Experts" (Specialized Situations)
 
@@ -72,6 +86,9 @@ Think of slash commands as **specialist team members** you can call in at any ti
 | `/auditor` | Reviews documentation against the codebase |
 | `/branchsync` | Keeps branches in sync with main |
 | `/sync` | Syncs documentation folders |
+| `/jules` | Sets up Google Jules AI agent for scheduled tasks |
+| `/jules-review` | Reviews and merges Jules AI PRs with safety checks |
+| `/quality-setup` | Sets up CI gates, security lint, Playwright, Lighthouse |
 
 > You don't need to memorize these. Just know they exist. When you need one, you'll find it here.
 

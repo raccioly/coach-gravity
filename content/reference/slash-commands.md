@@ -1,4 +1,4 @@
-# ⚡ Slash Commands — All 25 Workflows
+# ⚡ Slash Commands — All 37 Workflows
 
 > Type any of these in the Antigravity chat. They're like calling in a specialist.
 
@@ -12,6 +12,21 @@
 | **`/preflight`** | Run pre-commit quality checks — build verification, linting, test execution. Catches problems before they go live. |
 | **`/courier`** | Commit all changes, run preflight checks, and push to deploy. Your one-command publish button. |
 | **`/stage`** | Open a real browser and test your UI end-to-end. Clicks buttons, fills forms, validates user flows. |
+| **`/status`** | Project health dashboard — shows progress, open tasks, and overall state. |
+| **`/start`** | Guided onboarding — teaches concepts, sets up tools, and builds first project. |
+
+---
+
+## Building & Planning
+
+| Command | Description |
+|---|---|
+| **`/brainstorm`** | Structured idea exploration — generates 3+ options with pros, cons, and effort estimates before committing to one. |
+| **`/create`** | Create a new application from scratch with multi-agent coordination. The AI scaffolds your project. |
+| **`/plan`** | Structured task planning — creates a detailed breakdown with dependencies and estimates. |
+| **`/enhance`** | Add NEW features to an existing app — dark mode, admin panel, payment integration. |
+| **`/orchestrate`** | Multi-agent coordination — coordinates 3+ specialist agents for complex tasks. |
+| **`/debug`** | Systematic hypothesis-driven debugging — gathers info, forms hypotheses, tests each one. |
 
 ---
 
@@ -23,7 +38,7 @@
 | **`/sentinel`** | Security scan — finds vulnerabilities, exposed secrets, unsafe dependencies, and security risks. |
 | **`/critic`** | Code and comment quality review — checks naming, clarity, duplication, and overall code health. |
 | **`/tester`** | Test health audit — identifies coverage gaps, flaky tests, stale mocks, and missing edge cases. |
-| **`/bolt`** | Performance optimization — identifies and implements targeted speed improvements. |
+| **`/bolt`** | Performance optimization — identifies and implements targeted speed improvements on existing code. |
 
 ---
 
@@ -48,21 +63,13 @@
 
 ---
 
-## Data & Schema Integrity
+## UI & Design
 
 | Command | Description |
 |---|---|
-| **`/mirror`** | Schema consistency enforcer — ensures Zod schemas, TypeScript types, and OpenAPI specs stay in sync. |
-| **`/keeper`** | API contract validator — ensures API responses match documented contracts and catches breaking changes. |
-
----
-
-## UI & UX
-
-| Command | Description |
-|---|---|
-| **`/palette`** | UX polish agent — adds accessibility, small delights, and usability improvements to your interface. |
-| **`/packer`** | Bundle size optimizer — implements code splitting and reduces frontend load times. |
+| **`/ui-ux-pro-max`** | Professional UI design — 50 design styles, 21 color palettes, 50 font combinations for stunning interfaces. |
+| **`/palette`** | UX polish — adds small touches of delight and accessibility to the UI. |
+| **`/packer`** | Bundle size optimizer — implements code splitting and reduces frontend chunk sizes. |
 
 ---
 
@@ -70,6 +77,7 @@
 
 | Command | Description |
 |---|---|
+| **`/deploy`** | Production deployment — pre-flight checks, build, deploy, health check, with rollback support. |
 | **`/branchsync`** | Syncs branches with main — verifies changes and keeps your project up to date. |
 | **`/differ`** | Change impact analyzer — shows what files and features will be affected before you make changes. |
 | **`/guardian`** | Critical file protection — prevents accidental changes to core system files. |
@@ -82,6 +90,18 @@
 |---|---|
 | **`/observer`** | Observability audit — ensures proper logging, error handling, and monitoring patterns across the codebase. |
 | **`/translator`** | i18n completeness checker — ensures all user-facing text is translated for multi-language apps. |
+| **`/keeper`** | API contract validator — ensures API responses match documented contracts. |
+| **`/mirror`** | Schema consistency enforcer — ensures Zod schemas, TypeScript types, and OpenAPI spec stay in sync. |
+
+---
+
+## CI/CD & Automation
+
+| Command | Description |
+|---|---|
+| **`/jules`** | Set up Google Jules AI agent for scheduled tasks. |
+| **`/jules-review`** | Review and merge Jules AI PRs with safety checks. |
+| **`/quality-setup`** | Set up enterprise quality infrastructure — CI gates, security lint, Playwright, Lighthouse. |
 
 ---
 
@@ -109,6 +129,13 @@ For a monthly maintenance pass:
 /medic
 /hunter
 /janitor
+```
+
+For building something new:
+```
+/brainstorm my-idea
+/plan
+/create
 ```
 
 ### Creating Your Own
