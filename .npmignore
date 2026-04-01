@@ -12,3 +12,5 @@ CHANGELOG.md
 AGENTS.md
 *.zip
 *.tgz
+__pycache__/
+.DS_Store

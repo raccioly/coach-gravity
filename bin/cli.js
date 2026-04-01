@@ -28,6 +28,8 @@ const GEMINI_DIR = path.join(HOME, ".gemini");
 const ANTIGRAVITY_DIR = path.join(GEMINI_DIR, "antigravity");
 const GLOBAL_WORKFLOWS_DIR = path.join(ANTIGRAVITY_DIR, "global_workflows");
 const GLOBAL_SKILLS_DIR = path.join(ANTIGRAVITY_DIR, "skills");
+const GLOBAL_AGENTS_DIR = path.join(ANTIGRAVITY_DIR, "agents");
+const GLOBAL_SCRIPTS_DIR = path.join(ANTIGRAVITY_DIR, "scripts");
 const SKILL_DIR = path.join(GLOBAL_SKILLS_DIR, "coach-gravity");
 
 const CONTENT_DIR = path.join(__dirname, "..", "content");
@@ -167,6 +169,84 @@ function installGlobalWorkflows() {
     );
   }
   log(`  ✅ ${files.length} workflows installed to ${GLOBAL_WORKFLOWS_DIR}`);
+}
+
+function installGlobalAgents() {
+  log("🤖 Installing specialist agents...");
+  const agentSrc = path.join(CONTENT_DIR, "starter-kit", "agents");
+  fs.mkdirSync(GLOBAL_AGENTS_DIR, { recursive: true });
+  if (!fs.existsSync(agentSrc)) {
+    log("  ⚠️ Agent source not found — skipping");
+    return;
+  }
+  const files = fs.readdirSync(agentSrc).filter((f) => f.endsWith(".md"));
+  for (const file of files) {
+    fs.copyFileSync(
+      path.join(agentSrc, file),
+      path.join(GLOBAL_AGENTS_DIR, file)
+    );
+  }
+  log(`  ✅ ${files.length} agents installed to ${GLOBAL_AGENTS_DIR}`);
+}
+
+function installGlobalSkills() {
+  log("🧩 Installing domain skills...");
+  const skillsSrc = path.join(CONTENT_DIR, "starter-kit", "skills");
+  fs.mkdirSync(GLOBAL_SKILLS_DIR, { recursive: true });
+  if (!fs.existsSync(skillsSrc)) {
+    log("  ⚠️ Skills source not found — skipping");
+    return;
+  }
+  const dirs = fs
+    .readdirSync(skillsSrc, { withFileTypes: true })
+    .filter((d) => d.isDirectory());
+  for (const dir of dirs) {
+    copyDir(path.join(skillsSrc, dir.name), path.join(GLOBAL_SKILLS_DIR, dir.name));
+  }
+  log(`  ✅ ${dirs.length} skills installed to ${GLOBAL_SKILLS_DIR}`);
+}
+
+function installGlobalScripts() {
+  log("📜 Installing validation scripts...");
+  const scriptsSrc = path.join(CONTENT_DIR, "starter-kit", "scripts");
+  fs.mkdirSync(GLOBAL_SCRIPTS_DIR, { recursive: true });
+  if (!fs.existsSync(scriptsSrc)) {
+    log("  ⚠️ Scripts source not found — skipping");
+    return;
+  }
+  const files = fs.readdirSync(scriptsSrc).filter((f) => f.endsWith(".py"));
+  for (const file of files) {
+    fs.copyFileSync(
+      path.join(scriptsSrc, file),
+      path.join(GLOBAL_SCRIPTS_DIR, file)
+    );
+  }
+  log(`  ✅ ${files.length} scripts installed to ${GLOBAL_SCRIPTS_DIR}`);
+}
+
+function installSystemExtras() {
+  log("🗺️ Installing system files...");
+  const globalDir = path.join(CONTENT_DIR, "starter-kit", "global");
+
+  // SYSTEM-MAP.md
+  const mapSrc = path.join(globalDir, "SYSTEM-MAP.md");
+  const mapDest = path.join(ANTIGRAVITY_DIR, "SYSTEM-MAP.md");
+  if (fs.existsSync(mapSrc)) {
+    fs.copyFileSync(mapSrc, mapDest);
+    log("  ✅ SYSTEM-MAP.md installed");
+  }
+
+  // mcp_config.json
+  const mcpSrc = path.join(globalDir, "mcp_config.json");
+  const mcpDest = path.join(ANTIGRAVITY_DIR, "mcp_config.json");
+  if (fs.existsSync(mcpSrc)) {
+    if (!fs.existsSync(mcpDest) || fs.readFileSync(mcpDest, "utf8").trim() === '{\n  "mcpServers": {}\n}') {
+      fs.copyFileSync(mcpSrc, mcpDest);
+      log("  ✅ mcp_config.json installed (Context7)");
+    } else {
+      log("  ⏭️  mcp_config.json already configured — keeping yours");
+    }
+  }
 }
 
 function installSkill() {
@@ -335,8 +415,8 @@ function install() {
 
   console.log("");
   console.log("  ╔═══════════════════════════════════════════╗");
-  console.log("  ║       Coach Gravity Installer             ║");
-  console.log("  ║   Learn to build software with AI         ║");
+  console.log("  ║     Super Antigravity Installer            ║");
+  console.log("  ║   Coach Gravity + Full Agent Toolkit       ║");
   console.log("  ╚═══════════════════════════════════════════╝");
   console.log("");
 
@@ -346,11 +426,22 @@ function install() {
     installGlobalConfigs();
   }
   installGlobalWorkflows();
+  installGlobalAgents();
+  installGlobalSkills();
   installSkill();
+  installGlobalScripts();
+  installSystemExtras();
   installDocGuard();
 
   console.log("");
-  log("🎉 Coach Gravity installed!");
+  log("🎉 Super Antigravity installed!");
+  console.log("");
+  log("What you got:");
+  log("  • 20 specialist agent personas");
+  log("  • 38 domain knowledge skills");
+  log("  • 37 slash command workflows");
+  log("  • 4 validation scripts");
+  log("  • Context7 MCP for live docs");
   console.log("");
   log("To get started:");
   log("  1. Open any project folder in your AI coding agent");
@@ -363,9 +454,13 @@ function install() {
 
 function update() {
   console.log("");
-  log("🔄 Updating Coach Gravity...");
+  log("🔄 Updating Super Antigravity...");
   installGlobalWorkflows();
+  installGlobalAgents();
+  installGlobalSkills();
   installSkill();
+  installGlobalScripts();
+  installSystemExtras();
   console.log("");
   log("✅ Updated! Global configs were NOT overwritten.");
   log("   To reset configs: npx coach-gravity install --force");
