@@ -1,7 +1,7 @@
 {
   "name": "coach-gravity",
-  "version": "2.0.0",
-  "description": "Super Antigravity — AI coaching + 20 agents, 38 skills, 37 workflows for building real software",
+  "version": "3.0.0",
+  "description": "Super Antigravity — AI coaching + 20 agents, 58 skills, 35 workflows. Native GitHub Copilot and Cursor support.",
   "license": "MIT",
   "author": "Ricardo Accioly <raccioly@github.com>",
   "repository": {

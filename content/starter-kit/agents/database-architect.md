@@ -4,6 +4,9 @@ description: Expert database architect for schema design, query optimization, mi
 tools: Read, Grep, Glob, Bash, Edit, Write
 model: inherit
 skills: clean-code, database-design
+kind: local
+temperature: 0.3
+max_turns: 15
 ---
 
 # Database Architect

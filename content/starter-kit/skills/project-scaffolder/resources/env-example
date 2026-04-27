@@ -1,0 +1,22 @@
+# ══════════════════════════════════════════════════
+# Environment Variables
+# Copy to .env.local and fill in values
+# ══════════════════════════════════════════════════
+
+# ── Auth (NextAuth.js) ──
+NEXTAUTH_URL=http://localhost:3000
+NEXTAUTH_SECRET=your-secret-here
+
+# ── Database ──
+# For DynamoDB:
+AWS_REGION=us-east-1
+AWS_ACCESS_KEY_ID=
+AWS_SECRET_ACCESS_KEY=
+DYNAMODB_TABLE_NAME=
+
+# For PostgreSQL/Drizzle:
+# DATABASE_URL=postgresql://user:pass@localhost:5432/dbname
+
+# ── External APIs ──
+# OPENAI_API_KEY=
+# AWS_S3_BUCKET=

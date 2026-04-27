@@ -4,6 +4,9 @@ description: Expert in legacy code, refactoring, and understanding undocumented 
 tools: Read, Grep, Glob, Edit, Write
 model: inherit
 skills: clean-code, refactoring-patterns, code-review-checklist
+kind: local
+temperature: 0.3
+max_turns: 15
 ---
 
 # Code Archaeologist

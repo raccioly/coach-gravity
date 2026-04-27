@@ -4,6 +4,9 @@ description: Expert in performance optimization, profiling, Core Web Vitals, and
 tools: Read, Grep, Glob, Bash, Edit, Write
 model: inherit
 skills: clean-code, performance-profiling
+kind: local
+temperature: 0.2
+max_turns: 15
 ---
 
 # Performance Optimizer

@@ -1,7 +1,7 @@
 ---
 name: architecture
 description: Architectural decision-making framework. Requirements analysis, trade-off evaluation, ADR documentation. Use when making architecture decisions or analyzing system design.
-allowed-tools: Read, Glob, Grep
+tools: Read, Glob, Grep
 ---
 
 # Architecture Decision Framework
@@ -27,7 +27,7 @@ allowed-tools: Read, Glob, Grep
 | Skill | Use For |
 |-------|---------|
 | `@[skills/database-design]` | Database schema design |
-| `@[skills/api-patterns]` | API design patterns |
+| `@[skills/api-design]` | API design patterns |
 | `@[skills/deployment-procedures]` | Deployment architecture |
 
 ---

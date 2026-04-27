@@ -1,7 +1,7 @@
 ---
 name: clean-code
 description: Pragmatic coding standards - concise, direct, no over-engineering, no unnecessary comments
-allowed-tools: Read, Write, Edit
+tools: Read, Write, Edit
 version: 2.0
 priority: CRITICAL
 ---
@@ -149,7 +149,7 @@ File to edit: UserService.ts
 |-------|--------|---------|
 | **frontend-specialist** | UX Audit | `python .agent/skills/frontend-design/scripts/ux_audit.py .` |
 | **frontend-specialist** | A11y Check | `python .agent/skills/frontend-design/scripts/accessibility_checker.py .` |
-| **backend-specialist** | API Validator | `python .agent/skills/api-patterns/scripts/api_validator.py .` |
+| **backend-specialist** | API Validator | `python .agent/skills/api-design/scripts/api_validator.py .` |
 | **mobile-developer** | Mobile Audit | `python .agent/skills/mobile-design/scripts/mobile_audit.py .` |
 | **database-architect** | Schema Validate | `python .agent/skills/database-design/scripts/schema_validator.py .` |
 | **security-auditor** | Security Scan | `python .agent/skills/vulnerability-scanner/scripts/security_scan.py .` |

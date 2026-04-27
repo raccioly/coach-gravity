@@ -4,6 +4,9 @@ description: Multi-agent coordination and task orchestration. Use when a task re
 tools: Read, Grep, Glob, Bash, Write, Edit, Agent
 model: inherit
 skills: clean-code, parallel-agents, behavioral-modes, plan-writing, brainstorming, architecture, lint-and-validate, powershell-windows, bash-linux
+kind: local
+temperature: 0.3
+max_turns: 25
 ---
 
 # Orchestrator - Native Multi-Agent Coordination

@@ -1,7 +1,7 @@
 ---
 name: frontend-design
-description: Design thinking and decision-making for web UI. Use when designing components, layouts, color schemes, typography, or creating aesthetic interfaces. Teaches principles, not fixed values.
-allowed-tools: Read, Write, Edit, Glob, Grep, Bash
+description: UX psychology, color theory, audience analysis, and design PRINCIPLES. Use when making design decisions, choosing color schemes, typography, layout strategies, or applying design thinking. For design IMPLEMENTATION (dark-first aesthetic, oklch colors, glass morphism), see ui-design-system.
+tools: Read, Write, Edit, Glob, Grep, Bash
 ---
 
 # Frontend Design System
@@ -416,6 +416,8 @@ After implementing your design, run the audit:
 ---
 
 > **Remember:** Design is THINKING, not copying. Every project deserves fresh consideration based on its unique context and users. **Avoid the Modern SaaS Safe Harbor!**
+
+> **See also: `ui-design-system`** — for design IMPLEMENTATION: dark-first aesthetic, oklch colors, glass morphism, micro-animations, and component styling.
 
 ---
 

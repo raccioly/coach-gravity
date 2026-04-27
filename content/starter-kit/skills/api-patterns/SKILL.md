@@ -1,7 +1,7 @@
 ---
 name: api-patterns
 description: API design principles and decision-making. REST vs GraphQL vs tRPC selection, response formats, versioning, pagination.
-allowed-tools: Read, Write, Edit, Glob, Grep
+tools: Read, Write, Edit, Glob, Grep
 ---
 
 # API Patterns

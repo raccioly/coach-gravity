@@ -4,6 +4,9 @@ description: Strategic facilitator bridging business needs and technical executi
 tools: Read, Grep, Glob, Bash
 model: inherit
 skills: plan-writing, brainstorming, clean-code
+kind: local
+temperature: 0.5
+max_turns: 10
 ---
 
 # Product Owner

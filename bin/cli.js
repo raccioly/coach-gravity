@@ -154,7 +154,7 @@ function installGlobalWorkflows() {
     ".agent",
     "workflows"
   );
-  fs.mkdirSync(GLOBAL_WORKFLOWS_DIR, { recursive: true });
+  fs.mkdirSync(path.join(CONTENT_DIR, "starter-kit", "per-project", ".agent", "workflows"), { recursive: true });
   if (!fs.existsSync(workflowSrc)) {
     log("  ⚠️ Workflow source not found — skipping");
     return;
@@ -165,16 +165,16 @@ function installGlobalWorkflows() {
   for (const file of files) {
     fs.copyFileSync(
       path.join(workflowSrc, file),
-      path.join(GLOBAL_WORKFLOWS_DIR, file)
+      path.join(path.join(CONTENT_DIR, "starter-kit", "per-project", ".agent", "workflows"), file)
     );
   }
-  log(`  ✅ ${files.length} workflows installed to ${GLOBAL_WORKFLOWS_DIR}`);
+  log(`  ✅ ${files.length} workflows installed to ${path.join(CONTENT_DIR, "starter-kit", "per-project", ".agent", "workflows")}`);
 }
 
 function installGlobalAgents() {
   log("🤖 Installing specialist agents...");
   const agentSrc = path.join(CONTENT_DIR, "starter-kit", "agents");
-  fs.mkdirSync(GLOBAL_AGENTS_DIR, { recursive: true });
+  fs.mkdirSync(path.join(CONTENT_DIR, "starter-kit", "agents"), { recursive: true });
   if (!fs.existsSync(agentSrc)) {
     log("  ⚠️ Agent source not found — skipping");
     return;
@@ -183,16 +183,16 @@ function installGlobalAgents() {
   for (const file of files) {
     fs.copyFileSync(
       path.join(agentSrc, file),
-      path.join(GLOBAL_AGENTS_DIR, file)
+      path.join(path.join(CONTENT_DIR, "starter-kit", "agents"), file)
     );
   }
-  log(`  ✅ ${files.length} agents installed to ${GLOBAL_AGENTS_DIR}`);
+  log(`  ✅ ${files.length} agents installed to ${path.join(CONTENT_DIR, "starter-kit", "agents")}`);
 }
 
 function installGlobalSkills() {
   log("🧩 Installing domain skills...");
   const skillsSrc = path.join(CONTENT_DIR, "starter-kit", "skills");
-  fs.mkdirSync(GLOBAL_SKILLS_DIR, { recursive: true });
+  fs.mkdirSync(path.join(CONTENT_DIR, "starter-kit", "skills"), { recursive: true });
   if (!fs.existsSync(skillsSrc)) {
     log("  ⚠️ Skills source not found — skipping");
     return;
@@ -201,9 +201,9 @@ function installGlobalSkills() {
     .readdirSync(skillsSrc, { withFileTypes: true })
     .filter((d) => d.isDirectory());
   for (const dir of dirs) {
-    copyDir(path.join(skillsSrc, dir.name), path.join(GLOBAL_SKILLS_DIR, dir.name));
+    copyDir(path.join(skillsSrc, dir.name), path.join(path.join(CONTENT_DIR, "starter-kit", "skills"), dir.name));
   }
-  log(`  ✅ ${dirs.length} skills installed to ${GLOBAL_SKILLS_DIR}`);
+  log(`  ✅ ${dirs.length} skills installed to ${path.join(CONTENT_DIR, "starter-kit", "skills")}`);
 }
 
 function installGlobalScripts() {
@@ -236,16 +236,30 @@ function installSystemExtras() {
     log("  ✅ SYSTEM-MAP.md installed");
   }
 
-  // mcp_config.json
-  const mcpSrc = path.join(globalDir, "mcp_config.json");
-  const mcpDest = path.join(ANTIGRAVITY_DIR, "mcp_config.json");
-  if (fs.existsSync(mcpSrc)) {
-    if (!fs.existsSync(mcpDest) || fs.readFileSync(mcpDest, "utf8").trim() === '{\n  "mcpServers": {}\n}') {
-      fs.copyFileSync(mcpSrc, mcpDest);
-      log("  ✅ mcp_config.json installed (Context7)");
-    } else {
-      log("  ⏭️  mcp_config.json already configured — keeping yours");
-    }
+  // GEMINI.md
+  const geminiSrc = path.join(globalDir, "GEMINI.md");
+  const geminiDest = path.join(ANTIGRAVITY_DIR, "GEMINI.md");
+  if (fs.existsSync(geminiSrc)) {
+    fs.copyFileSync(geminiSrc, geminiDest);
+    log("  ✅ GEMINI.md installed");
+  }
+
+  // GATES.md
+  const gatesSrc = path.join(globalDir, "GATES.md");
+  const gatesDest = path.join(ANTIGRAVITY_DIR, "GATES.md");
+  if (fs.existsSync(gatesSrc)) {
+    fs.copyFileSync(gatesSrc, gatesDest);
+    log("  ✅ GATES.md installed");
+  }
+
+  // CLAUDE.md (global)
+  const claudeSrc = path.join(globalDir, "CLAUDE.md");
+  const claudeHomeDir = path.join(HOME, ".claude");
+  const claudeDest = path.join(claudeHomeDir, "CLAUDE.md");
+  if (fs.existsSync(claudeSrc)) {
+    if (!fs.existsSync(claudeHomeDir)) fs.mkdirSync(claudeHomeDir, { recursive: true });
+    fs.copyFileSync(claudeSrc, claudeDest);
+    log("  ✅ CLAUDE.md installed to ~/.claude/CLAUDE.md");
   }
 }
 
@@ -394,6 +408,82 @@ function init() {
     log("⏭️  docs-canonical/ already exists — keeping yours");
   }
 
+
+  // 4. Copilot Support: .vscode/settings.json
+  const vscodeDir = path.join(cwd, ".vscode");
+  const settingsFile = path.join(vscodeDir, "settings.json");
+  if (!fs.existsSync(vscodeDir)) fs.mkdirSync(vscodeDir, { recursive: true });
+  let settings = {};
+  if (fs.existsSync(settingsFile)) {
+    try {
+      settings = JSON.parse(fs.readFileSync(settingsFile, "utf8"));
+    } catch (e) {}
+  }
+  settings["chat.agentSkillsLocations"] = settings["chat.agentSkillsLocations"] || {};
+  settings["chat.agentSkillsLocations"][".github/skills/**"] = true;
+  settings["chat.agentFilesLocations"] = settings["chat.agentFilesLocations"] || [];
+  if (!settings["chat.agentFilesLocations"].includes(".github/agents")) {
+    settings["chat.agentFilesLocations"].push(".github/agents");
+  }
+  fs.writeFileSync(settingsFile, JSON.stringify(settings, null, 2));
+  installed++;
+  log("✅ .vscode/settings.json configured for Copilot");
+
+  // 5. Copilot Support: .github/copilot-instructions.md
+  const githubDir = path.join(cwd, ".github");
+  if (!fs.existsSync(githubDir)) fs.mkdirSync(githubDir, { recursive: true });
+  const copilotSrc = path.join(CONTENT_DIR, "starter-kit", "global", "GEMINI.md");
+  const copilotDest = path.join(githubDir, "copilot-instructions.md");
+  if (fs.existsSync(copilotSrc)) {
+    copyFile(copilotSrc, copilotDest);
+    installed++;
+    log("✅ .github/copilot-instructions.md created");
+  }
+
+  // 6. Copilot Support: Skills, Prompts, Agents
+  const destSkillsDir = path.join(githubDir, "skills");
+  if (!fs.existsSync(destSkillsDir)) fs.mkdirSync(destSkillsDir, { recursive: true });
+  if (fs.existsSync(path.join(CONTENT_DIR, "starter-kit", "skills"))) {
+    copyDir(path.join(CONTENT_DIR, "starter-kit", "skills"), destSkillsDir);
+    installed++;
+    log("✅ .github/skills/ populated with 58 skills");
+  }
+
+  const destPromptsDir = path.join(githubDir, "prompts");
+  if (!fs.existsSync(destPromptsDir)) fs.mkdirSync(destPromptsDir, { recursive: true });
+  if (fs.existsSync(path.join(CONTENT_DIR, "starter-kit", "per-project", ".agent", "workflows"))) {
+    const workflows = fs.readdirSync(path.join(CONTENT_DIR, "starter-kit", "per-project", ".agent", "workflows")).filter(f => f.endsWith('.md') && f !== 'start.md');
+    workflows.forEach(w => {
+      const src = path.join(path.join(CONTENT_DIR, "starter-kit", "per-project", ".agent", "workflows"), w);
+      const destName = w.replace('.md', '.prompt.md');
+      const dest = path.join(destPromptsDir, destName);
+      const c = fs.readFileSync(src, 'utf8');
+      const yaml = `---\nmode: agent\ndescription: Anti-Gravity workflow for ${w.replace('.md', '')}\n---\n\n`;
+      fs.writeFileSync(dest, yaml + c);
+    });
+    installed++;
+    log("✅ .github/prompts/ populated with slash commands");
+  }
+
+  const destAgentsDir = path.join(githubDir, "agents");
+  if (!fs.existsSync(destAgentsDir)) fs.mkdirSync(destAgentsDir, { recursive: true });
+  if (fs.existsSync(path.join(CONTENT_DIR, "starter-kit", "agents"))) {
+    const agents = fs.readdirSync(path.join(CONTENT_DIR, "starter-kit", "agents")).filter(f => f.endsWith('.md'));
+    agents.forEach(a => {
+      const src = path.join(path.join(CONTENT_DIR, "starter-kit", "agents"), a);
+      const destName = a.replace('.md', '.agent.md');
+      const dest = path.join(destAgentsDir, destName);
+      let c = fs.readFileSync(src, 'utf8');
+      if (!c.startsWith('---')) {
+        const yaml = `---\nname: ${a.replace('.md', '')}\ndescription: Anti-Gravity specialist persona\n---\n\n`;
+        c = yaml + c;
+      }
+      fs.writeFileSync(dest, c);
+    });
+    installed++;
+    log("✅ .github/agents/ populated with specialist personas");
+  }
+
   console.log("");
   if (installed > 0) {
     log(`🎉 ${installed} project files set up!`);
@@ -438,11 +528,10 @@ function install() {
   console.log("");
   log("What you got:");
   log("  • 20 specialist agent personas");
-  log("  • 38 domain knowledge skills");
+  log("  • 58 domain knowledge skills");
   log("  • 37 slash command workflows");
   log("  • 4 validation scripts");
-  log("  • Context7 MCP for live docs");
-  console.log("");
+    console.log("");
   log("To get started:");
   log("  1. Open any project folder in your AI coding agent");
   log("  2. Run: npx coach-gravity init");

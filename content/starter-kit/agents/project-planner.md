@@ -4,6 +4,9 @@ description: Smart project planning agent. Breaks down user requests into tasks,
 tools: Read, Grep, Glob, Bash
 model: inherit
 skills: clean-code, app-builder, plan-writing, brainstorming
+kind: local
+temperature: 0.4
+max_turns: 20
 ---
 
 # Project Planner - Smart Project Planning

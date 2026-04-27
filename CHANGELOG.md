@@ -5,6 +5,24 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/),
 and this project adheres to [Semantic Versioning](https://semver.org/).
 
+## [3.0.0] - 2026-04-27
+
+### Added
+- **Native GitHub Copilot Support**: `npx coach-gravity init` now translates the Anti-Gravity framework directly into the new Agent Skills standard (.github/skills/, .github/prompts/, .github/agents/). No extensions needed!
+- **20 New Domain Skills**: Including API contracts, architecture review, database patterns, and Next.js patterns. (Removed office document/PDF generation skills to keep distribution lean). Total skills: 58.
+- **VS Code Configuration Auto-Generation**: Installer automatically generates `.vscode/settings.json` with the correct `chat.*` hooks for Copilot to discover local skills.
+- **CLAUDE.md Global Deployment**: Added support for Claude Code global instructions deployment to `~/.claude/CLAUDE.md`.
+
+### Changed
+- Replaced 216-line verbose GEMINI.md with 102-line optimized version.
+- Re-architected workflow ↔ skill mapping (workflows are now the triggers, skills are the knowledge).
+- Updated frontmatter across all 20 agents and 38 existing skills.
+- SYSTEM-MAP.md updated to reflect new v3.0 architecture.
+
+### Removed
+- Removed MCP Configuration (Context7) entirely, streamlining the package for offline/local environments.
+- Excluded company-specific branding skills and Jules-specific workflows to maintain a pristine, distribution-ready public package.
+
 ## [2.0.0] - 2026-04-01
 
 ### Added

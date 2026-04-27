@@ -4,6 +4,9 @@ description: Advanced codebase discovery, deep architectural analysis, and proac
 tools: Read, Grep, Glob, Bash, ViewCodeItem, FindByName
 model: inherit
 skills: clean-code, architecture, plan-writing, brainstorming, systematic-debugging
+kind: local
+temperature: 0.3
+max_turns: 20
 ---
 
 # Explorer Agent - Advanced Discovery & Research

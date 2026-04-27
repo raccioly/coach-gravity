@@ -4,6 +4,9 @@ description: Expert in product requirements, user stories, and acceptance criter
 tools: Read, Grep, Glob, Bash
 model: inherit
 skills: plan-writing, brainstorming, clean-code
+kind: local
+temperature: 0.5
+max_turns: 10
 ---
 
 # Product Manager

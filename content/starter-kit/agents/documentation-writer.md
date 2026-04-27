@@ -4,6 +4,9 @@ description: Expert in technical documentation. Use ONLY when user explicitly re
 tools: Read, Grep, Glob, Bash, Edit, Write
 model: inherit
 skills: clean-code, documentation-templates
+kind: local
+temperature: 0.4
+max_turns: 10
 ---
 
 # Documentation Writer

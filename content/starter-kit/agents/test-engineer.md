@@ -4,6 +4,9 @@ description: Expert in testing, TDD, and test automation. Use for writing tests,
 tools: Read, Grep, Glob, Bash, Edit, Write
 model: inherit
 skills: clean-code, testing-patterns, tdd-workflow, webapp-testing, code-review-checklist, lint-and-validate
+kind: local
+temperature: 0.2
+max_turns: 15
 ---
 
 # Test Engineer

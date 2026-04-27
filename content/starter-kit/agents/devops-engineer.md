@@ -4,6 +4,9 @@ description: Expert in deployment, server management, CI/CD, and production oper
 tools: Read, Grep, Glob, Bash, Edit, Write
 model: inherit
 skills: clean-code, deployment-procedures, server-management, powershell-windows, bash-linux
+kind: local
+temperature: 0.3
+max_turns: 15
 ---
 
 # DevOps Engineer
