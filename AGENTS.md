@@ -7,7 +7,7 @@
 
 ## Project Overview
 
-Coach Gravity is an AI-assisted coaching toolkit (npm package) that teaches non-programmers how to build real software. It distributes the Super Antigravity toolkit — 20 specialist agents, 38 domain skills, 37 slash command workflows, validation scripts, and global AI configuration — via `npx coach-gravity install`.
+Coach Gravity is an AI-assisted coaching toolkit (npm package) that teaches non-programmers how to build real software. It distributes the Super Antigravity toolkit — 20 specialist agents, 58 domain skills, 35 slash command workflows, validation scripts, and global AI configuration — via `npx coach-gravity install`. Version 3.0 adds native GitHub Copilot and Cursor support through the Agent Skills spec.
 
 ## Project Documentation (CDD)
 

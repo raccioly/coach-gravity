@@ -16,7 +16,6 @@
 └── antigravity/
     ├── GATES.md                 # Socratic + Spec-Kit gate (loaded for COMPLEX/DESIGN only)
     ├── SYSTEM-MAP.md            # This file
-    ├── mcp_config.json          # MCP server configuration
     ├── agents/                  # 20 specialist agent personas
     │   └── ROUTING.md           # Agent selection table (loaded when implementing)
     ├── global_workflows/        # 23 slash commands (user-triggered actions)
@@ -66,7 +65,7 @@ Full routing and skills per agent live in `agents/ROUTING.md`. This list is inve
 
 ---
 
-## Workflows (23 Slash Commands)
+## Workflows (35 Slash Commands)
 
 User-triggered action shortcuts. The agent does NOT auto-discover these — use skills for auto-activated domain expertise.
 
@@ -116,14 +115,12 @@ User-triggered action shortcuts. The agent does NOT auto-discover these — use 
 ### Automation & CI
 | Command | Purpose |
 |---------|---------|
-| `/jules` | Set up Google Jules AI agent for scheduled tasks |
-| `/jules-review` | Review and merge Jules AI PRs |
 | `/quality-setup` | Set up CI gates, security lint, Playwright, Lighthouse |
 | `/branchsync` | Sync unmerged branches into main |
 
 ---
 
-## Skills (71 Auto-Activated Domain Modules)
+## Skills (58 Auto-Activated Domain Modules)
 
 Skills auto-activate via `activate_skill` when the agent detects a matching request. Only name + description are loaded at session start; full content loads on demand.
 
@@ -242,17 +239,7 @@ Skills auto-activate via `activate_skill` when the agent detects a matching requ
 | `git-commit-format` | Conventional Commits spec |
 | `non-technical-comms` | Plain English explanations |
 | `project-scaffolder` | Project template orchestration |
-| `jules-environment-setup` | Google Jules VM configuration |
-| `skill-creator` | Skill creation workflow and evaluation |
 | `aws-deployment` | AWS Amplify, App Runner, DynamoDB, S3, Lambda |
-
-### Document Processing
-| Skill | Purpose |
-|-------|---------|
-| `docx` | Word document creation/editing |
-| `pdf` | PDF processing, merging, splitting, OCR |
-| `pptx` | Presentation creation/editing |
-| `xlsx` | Excel creation/editing, financial models |
 
 ### Educational
 | Skill | Purpose |
@@ -278,13 +265,7 @@ Project-specific architectural context stored in `knowledge/`. Each subdirectory
 
 ---
 
-## MCP Servers
 
-| Server | Purpose |
-|--------|---------|
-| `context7` | Live library documentation lookup (prevents stale API patterns) |
-
----
 
 ## Governing Rules (Priority Order)
 
@@ -295,5 +276,5 @@ Project-specific architectural context stored in `knowledge/`. Each subdirectory
 
 ---
 
-**Last Updated**: 2026-04-17
-**Version**: 3.0 (Skills-first architecture: 14 workflows converted to auto-activated skills, 4 skill pairs consolidated, agent frontmatter standardized)
+**Last Updated**: 2026-04-27
+**Version**: 3.0.1 (v3.0 distribution: removed MCP/Jules/office skills, added Copilot Agent Skills scaffolding, 58 skills, 35 workflows)

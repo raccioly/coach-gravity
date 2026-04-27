@@ -16,7 +16,7 @@ Coach Gravity is a structured coaching toolkit. You can install it in two ways:
 ```bash
 npx coach-gravity install
 ```
-This auto-installs everything: global workflows, the Coach Gravity skill, DocGuard, and config files into `~/.gemini/`.
+This auto-installs everything: global workflows, agents, skills, and config files into `~/.gemini/`.
 
 **Option B — ZIP archive:**
 1. **Unzip** `coach_gravity.zip` into a folder on your machine
@@ -36,6 +36,14 @@ This auto-installs everything: global workflows, the Coach Gravity skill, DocGua
 | `images/` | Visual assets and diagrams |
 | `.agent/` | AI agent configuration — workflows (slash commands) and skills |
 | `.specify/` | Spec Kit framework — constitution, templates, and extensions |
+
+### Multi-Platform Support (v3.0)
+
+Running `npx coach-gravity init` inside a project also generates:
+- `.github/skills/` — 58 skills as native Agent Skills for Copilot
+- `.github/prompts/` — 35 workflows as native `/slash` commands for Copilot
+- `.github/agents/` — 20 personas as native `@agent` participants
+- `.vscode/settings.json` — Configuration hooks for Copilot auto-discovery
 
 ### Developer Commands
 

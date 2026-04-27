@@ -1,8 +1,8 @@
 # Architecture
 
-<!-- docguard:version 0.1.0 -->
+<!-- docguard:version 0.2.0 -->
 <!-- docguard:status approved -->
-<!-- docguard:last-reviewed 2026-03-17 -->
+<!-- docguard:last-reviewed 2026-04-27 -->
 <!-- docguard:owner @raccioly -->
 
 > **Canonical document** — Design intent. This file describes WHAT the system is designed to be.  
@@ -11,15 +11,15 @@
 | Metadata | Value |
 |----------|-------|
 | **Status** | ![Status](https://img.shields.io/badge/status-approved-green) |
-| **Version** | `0.1.0` |
-| **Last Updated** | 2026-03-17 |
+| **Version** | `0.2.0` |
+| **Last Updated** | 2026-04-27 |
 | **Owner** | @raccioly |
 
 ---
 
 ## System Overview
 
-Coach Gravity teaches non-programmers how to build real software using AI coding agents. The toolkit provides a structured 9-phase learning curriculum (Phases 0–8), reference materials, starter-kit templates, and delivery guides. Authors write all content in Markdown and distribute the toolkit as a ZIP archive. The toolkit runs entirely through an AI coding agent (Antigravity) that reads the curriculum and workflows to guide learners interactively — the project uses Markdown files exclusively, with the AI agent as the runtime.
+Coach Gravity teaches non-programmers how to build real software using AI coding agents. The toolkit provides a structured 9-phase learning curriculum (Phases 0–8), reference materials, starter-kit templates, and delivery guides. It is distributed as an npm package (`npx coach-gravity install`) with a CLI that auto-scaffolds the framework for multiple AI platforms. As of v3.0, the CLI natively generates GitHub Copilot Agent Skills (`.github/skills/`, `.github/prompts/`, `.github/agents/`) and Cursor-compatible configurations, in addition to the original Gemini/Claude Code global install.
 
 ## Component Map
 
@@ -33,6 +33,7 @@ Coach Gravity teaches non-programmers how to build real software using AI coding
 | Images | Visual assets and diagrams used throughout the curriculum | `images/` |
 | Archive | Historical or versioned snapshots of the toolkit | `archive/` |
 | Agent Workflows | Antigravity slash commands and AI skill definitions for the coaching agent | `.agent/workflows/`, `.agent/skills/` |
+| Copilot Scaffolding | Native Agent Skills, prompt files, and agent personas for VS Code Copilot | `.github/skills/`, `.github/prompts/`, `.github/agents/` |
 | Spec Kit Config | Spec-driven development framework with constitution, templates, and extensions | `.specify/` |
 
 ## Layer Boundaries
@@ -50,9 +51,12 @@ Coach Gravity teaches non-programmers how to build real software using AI coding
 |----------|-----------|---------|---------|
 | Content Format | Markdown | N/A | N/A |
 | AI Agent | Antigravity (Google DeepMind) | Latest | Proprietary |
+| AI Agent | GitHub Copilot (VS Code) | Latest | Proprietary |
+| AI Agent | Claude Code (Anthropic) | Latest | Proprietary |
 | Documentation QA | DocGuard CLI | 0.9.8 | MIT |
 | Spec Framework | Spec Kit (GitHub) | 0.3.0 | MIT |
-| Distribution | ZIP archive | N/A | N/A |
+| Distribution | npm (`coach-gravity`) | 3.0.0 | MIT |
+| CLI Runtime | Node.js | 18+ | MIT |
 
 ## External Dependencies
 
@@ -81,4 +85,5 @@ graph TD
 
 | Version | Date | Author | Changes |
 |---------|------|--------|---------|
+| 0.2.0 | 2026-04-27 | @raccioly | v3.0: Added multi-platform distribution (npm CLI), native Copilot Agent Skills scaffolding, removed MCP dependency |
 | 0.1.0 | 2026-03-17 | @raccioly | Initial architecture for Coach Gravity coaching toolkit |

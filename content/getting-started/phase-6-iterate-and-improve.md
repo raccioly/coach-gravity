@@ -6,7 +6,7 @@
 
 > **🏁 Ready Check — Can I skip this section?**
 >
-> ✅ Skip if: You're familiar with the 37 slash commands and know how to run quality workflows
+> ✅ Skip if: You're familiar with the 35 slash commands and know how to run quality workflows
 > 📖 Read if: You've never used `/preflight`, `/sentinel`, or `/architect`
 >
 > At minimum, read the **Enterprise-Ready Quality Gates** section — it teaches you how to make your code professional enough for a client's enterprise architect to review.
@@ -27,11 +27,11 @@ Antigravity makes this cycle fast — measured in minutes, not days. Here's how 
 
 ---
 
-## Your Toolbox: The 37 Slash Commands
+## Your Toolbox: The 35 Slash Commands
 
 ![Your slash command toolbox](/images/lessons/p6-slash-commands.png)
 
-Think of slash commands as **specialist team members** you can call in at any time. You don't need to use all 37 — most people use 5-8 regularly and dip into others as needed.
+Think of slash commands as **specialist team members** you can call in at any time. You don't need to use all 35 — most people use 5-8 regularly and dip into others as needed.
 
 ### The "Daily Drivers" (Use These All the Time)
 
@@ -86,9 +86,7 @@ Think of slash commands as **specialist team members** you can call in at any ti
 | `/auditor` | Reviews documentation against the codebase |
 | `/branchsync` | Keeps branches in sync with main |
 | `/sync` | Syncs documentation folders |
-| `/jules` | Sets up Google Jules AI agent for scheduled tasks |
-| `/jules-review` | Reviews and merges Jules AI PRs with safety checks |
-| `/quality-setup` | Sets up CI gates, security lint, Playwright, Lighthouse |
+| `/quality-setup` | Sets up enterprise quality infrastructure — CI gates, security lint, Playwright, Lighthouse |
 
 > You don't need to memorize these. Just know they exist. When you need one, you'll find it here.
 

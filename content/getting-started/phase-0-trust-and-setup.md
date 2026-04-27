@@ -156,7 +156,7 @@ In the Antigravity chat, type:
 
 This does four things:
 1. ✅ **Copies safety rules** to your computer — these tell Antigravity to always show plans, get approval, and follow a structured workflow
-2. ✅ **Installs 37 slash commands** globally — specialist workflows like `/preflight`, `/sentinel`, and `/architect` that are available in every project
+2. ✅ **Installs 35 slash commands** globally — specialist workflows like `/preflight`, `/sentinel`, and `/architect` that are available in every project
 3. ✅ **Checks your tools** — verifies Node.js and Git are installed
 4. ✅ **Guides you to your first build** — Phase 1
 

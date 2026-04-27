@@ -98,7 +98,7 @@ Antigravity still works, but less effectively. Without project context, it might
 
 The **project-level** workflow takes priority. This lets you customize behavior per project while keeping global defaults for everything else.
 
-### "I have all 37 workflows — do I need them all?"
+### "I have all 35 workflows — do I need them all?"
 
 **No.** They're available when you need them. Most people use `/launch`, `/preflight`, and `/courier` daily and dip into others as needed. Having unused workflows doesn't slow anything down.
 

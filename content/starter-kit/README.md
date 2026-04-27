@@ -11,10 +11,9 @@ These files go in your home directory (`~/.gemini/`) and apply to **every projec
 | File | Purpose |
 |---|---|
 | `GEMINI.md` | Rules the AI follows — request classifier, Socratic gate, agent routing, research-first |
-| `CLAUDE.md` | Same rules in alternative format (for compatibility with different AI engines) |
-| `agreement.md` | Operating agreement defining your working relationship with the AI |
+| `CLAUDE.md` | Same rules for Claude Code compatibility (`~/.claude/CLAUDE.md`) |
 | `SYSTEM-MAP.md` | Architecture self-reference — maps all agents, skills, and workflows |
-| `mcp_config.json` | MCP server config (Context7 for live documentation lookup) |
+| `GATES.md` | Mandatory quality gate for complex requests |
 
 **Installation:** Run `npx coach-gravity install` to set everything up automatically.
 
@@ -40,13 +39,14 @@ These files go in your home directory (`~/.gemini/`) and apply to **every projec
 
 ## Domain Skills (`skills/`)
 
-37 knowledge modules the AI loads contextually:
+58 knowledge modules the AI loads contextually:
 
-**Frontend:** `frontend-design`, `nextjs-react-expert`, `tailwind-patterns`, `web-design-guidelines`
-**Backend:** `api-patterns`, `nodejs-best-practices`, `python-patterns`
+**Frontend:** `frontend-design`, `nextjs-react-expert`, `nextjs-patterns`, `tailwind-patterns`, `ui-design-system`, `web-design-guidelines`
+**Backend:** `api-patterns`, `api-design`, `api-contracts`, `nodejs-best-practices`, `python-patterns`, `error-handling`
 **Testing:** `testing-patterns`, `webapp-testing`, `tdd-workflow`
-**Security:** `vulnerability-scanner`, `red-team-tactics`
-**And more:** database-design, architecture, mobile-design, game-development, seo, i18n, Rust, etc.
+**Security:** `vulnerability-scanner`, `red-team-tactics`, `security-first`
+**Architecture:** `architecture`, `architecture-review`, `aws-deployment`
+**And more:** database-design, database-patterns, mobile-design, game-development, seo, i18n, Rust, etc.
 
 ---
 
@@ -57,9 +57,9 @@ These files are copied into **each new project** you create:
 | File/Folder | Purpose |
 |---|---|
 | `AGENT-REFERENCE.md` | Your project's "brain" — tells the AI about your project's tech, structure, and conventions |
-| `.agent/workflows/*.md` | The 37 slash command definitions (see below) |
+| `.agent/workflows/*.md` | The 35 slash command definitions (see below) |
 
-### Included Workflows (37 total)
+### Included Workflows (35 total)
 
 **Everyday:** `/launch`, `/preflight`, `/courier`, `/stage`, `/status`, `/start`
 **Building:** `/brainstorm`, `/create`, `/plan`, `/enhance`, `/orchestrate`, `/debug`
@@ -69,8 +69,7 @@ These files are copied into **each new project** you create:
 **Data:** `/mirror`, `/keeper`
 **UI/UX:** `/ui-ux-pro-max`, `/palette`, `/packer`
 **Deploy:** `/deploy`, `/branchsync`, `/differ`, `/guardian`
-**Specialized:** `/observer`, `/translator`
-**CI/CD:** `/jules`, `/jules-review`, `/quality-setup`
+**Specialized:** `/observer`, `/translator`, `/quality-setup`
 
 > See [Slash Commands Reference](../reference/slash-commands.md) for detailed descriptions of each command.
 
@@ -91,20 +90,34 @@ These files are copied into **each new project** you create:
 
 ## How It All Fits Together
 
+### For Gemini / Claude Code (Global Install)
+
 ```
 ~/.gemini/
 ├── GEMINI.md              ← Global rules (all projects)
-├── CLAUDE.md              ← Global rules (alternative format)
-├── agreement.md           ← Working agreement
 └── antigravity/
     ├── agents/            ← 20 specialist personas
-    ├── skills/            ← 38 domain knowledge modules
-    ├── global_workflows/  ← 37 slash commands
+    ├── skills/            ← 58 domain knowledge modules
+    ├── global_workflows/  ← 35 slash commands
     ├── scripts/           ← 4 validation scripts
     ├── SYSTEM-MAP.md      ← Architecture self-reference
-    └── mcp_config.json    ← Context7 MCP config
+    └── GATES.md           ← Quality gate for complex tasks
 
+~/.claude/
+└── CLAUDE.md              ← Global rules for Claude Code
+```
+
+### For VS Code Copilot / Cursor (Per-Project Init)
+
+```
 your-project/
+├── .vscode/
+│   └── settings.json      ← Copilot hooks (auto-generated)
+├── .github/
+│   ├── copilot-instructions.md  ← Global AI instructions
+│   ├── skills/            ← 58 skills (native Agent Skills)
+│   ├── prompts/           ← 35 workflows as /slash commands
+│   └── agents/            ← 20 personas as @participants
 ├── AGENT-REFERENCE.md     ← This project's context
 ├── .agent/workflows/      ← Project workflows
 ├── docs-canonical/        ← What you want to build

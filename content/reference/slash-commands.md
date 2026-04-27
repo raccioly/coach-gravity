@@ -1,6 +1,6 @@
-# ⚡ Slash Commands — All 37 Workflows
+# ⚡ Slash Commands — All 35 Workflows
 
-> Type any of these in the Antigravity chat. They're like calling in a specialist.
+> Type any of these in the chat. They're like calling in a specialist.
 
 ---
 
@@ -92,22 +92,13 @@
 | **`/translator`** | i18n completeness checker — ensures all user-facing text is translated for multi-language apps. |
 | **`/keeper`** | API contract validator — ensures API responses match documented contracts. |
 | **`/mirror`** | Schema consistency enforcer — ensures Zod schemas, TypeScript types, and OpenAPI spec stay in sync. |
-
----
-
-## CI/CD & Automation
-
-| Command | Description |
-|---|---|
-| **`/jules`** | Set up Google Jules AI agent for scheduled tasks. |
-| **`/jules-review`** | Review and merge Jules AI PRs with safety checks. |
 | **`/quality-setup`** | Set up enterprise quality infrastructure — CI gates, security lint, Playwright, Lighthouse. |
 
 ---
 
 ## How to Use Them
 
-Just type the command in the Antigravity chat:
+Just type the command in the chat:
 
 ```
 /preflight
@@ -141,3 +132,5 @@ For building something new:
 ### Creating Your Own
 
 Add a `.md` file to `.agent/workflows/`. If you name it `mycommand.md`, you can use `/mycommand`. See the existing workflow files for the format.
+
+For Copilot users: Add a `.prompt.md` file to `.github/prompts/`. It will show up as a native slash command.

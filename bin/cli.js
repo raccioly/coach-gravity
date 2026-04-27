@@ -529,7 +529,7 @@ function install() {
   log("What you got:");
   log("  • 20 specialist agent personas");
   log("  • 58 domain knowledge skills");
-  log("  • 37 slash command workflows");
+  log("  • 35 slash command workflows");
   log("  • 4 validation scripts");
     console.log("");
   log("To get started:");
