@@ -18,7 +18,7 @@ jobs:
       version: ${{ steps.check.outputs.version }}
       changed: ${{ steps.check.outputs.changed }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
         with:
           fetch-depth: 2
 
@@ -46,7 +46,7 @@ jobs:
     outputs:
       tag: v${{ needs.detect-version.outputs.version }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
 
       - name: Create and push tag
         env:
@@ -153,7 +153,7 @@ jobs:
     needs: [detect-version, create-release]
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
       - uses: actions/setup-node@v4
         with:
           node-version: 20
