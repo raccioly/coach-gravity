@@ -8,6 +8,13 @@ That's it. The tool will walk you through everything from here.
 
 ---
 
+
+## Setup
+
+1. Clone this repo.
+2. Run `npm test` (or `bash tests/smoke.sh`) to verify packaging files are present.
+3. Follow Install in this README for the coach CLI / skill install path.
+
 ## What You Get
 
 | Component | Count | Description |

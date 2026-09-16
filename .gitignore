@@ -19,3 +19,8 @@ Thumbs.db
 # Antigravity local state
 .gemini/
 antigravity/
+
+# Secrets
+.env
+.env.*
+!.env.example
