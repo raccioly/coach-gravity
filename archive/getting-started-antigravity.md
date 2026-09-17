@@ -758,7 +758,7 @@ It instructs the AI to:
 
 | Section | What to include | Example |
 |---|---|---|
-| **Project Overview** | Name, type, domain, stage, repository URL | "MergerSync, SaaS Platform, M&A Integration, Production" |
+| **Project Overview** | Name, type, domain, stage, repository URL | "AcmeSync, SaaS Platform, M&A Integration, Production" |
 | **Tech Stack** | Every technology used, by layer | "Frontend: Next.js 16, Styling: Tailwind v4, DB: PostgreSQL" |
 | **Directory Structure** | Folder tree showing where things live | `src/app/` for pages, `src/lib/` for utilities |
 | **Key Documents** | Docs the AI must read before making changes | Architecture docs, data model, feature specs |

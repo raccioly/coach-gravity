@@ -110,7 +110,7 @@ User-triggered action shortcuts. The agent does NOT auto-discover these — use 
 |---------|---------|
 | `/auditor` | Documentation review |
 | `/scribe` | Deep documentation enhancement |
-| `/sync` | Sync docs to WU Documentation folder |
+| `/sync` | Sync docs to External Documentation folder |
 
 ### Automation & CI
 | Command | Purpose |
