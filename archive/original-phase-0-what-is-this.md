@@ -90,7 +90,7 @@ That's it. One paragraph. Antigravity built the entire thing.
 **Why it's impressive:** This is running in production right now, handling actual customer conversations. It has real-time updates, performance reports, and supports multiple agents working simultaneously.
 
 **What the user said to start building it:**
-> *"I need a WhatsApp inbox system where agents can see incoming messages, respond, manage contacts, and track SLA performance. It should have a dashboard with real-time metrics."*
+> *"I need a customer support inbox system where agents can see incoming messages, respond, manage contacts, and track SLA performance. It should have a dashboard with real-time metrics."*
 
 ![Customer Support Inbox](../images/gallery-strategy-presentation.png)
 

@@ -1,10 +1,10 @@
 ---
-description: Sync documentation changes to WU Documentation folder since last workflow run
+description: Sync documentation changes to External Documentation folder since last workflow run
 ---
 
 # Documentation Sync Workflow
 
-Systematically review changes in project documentation and update WU Documentation with relevant changes. This workflow tracks its own execution history to only process changes since the last run.
+Systematically review changes in project documentation and update External Documentation with relevant changes. This workflow tracks its own execution history to only process changes since the last run.
 
 ---
 
@@ -12,7 +12,7 @@ Systematically review changes in project documentation and update WU Documentati
 
 - Git repository with clean working directory
 - Access to all documentation folders: `/docs`, `/docs-canonical`, `/docs-implementation`
-- Write access to `/WU Documentation`
+- Write access to `/External Documentation`
 
 ---
 
@@ -68,7 +68,7 @@ git log --oneline $LAST_COMMIT..HEAD -- docs/ docs-canonical/ docs-implementatio
 
 Review each changed file and categorize by impact type:
 
-| Category | Source Files | Impact on WU Documentation |
+| Category | Source Files | Impact on External Documentation |
 |----------|--------------|---------------------------|
 | **Architecture** | `ARCHITECTURE.md`, `ADR.md` | Update `01-Architecture-Diagram.md`, `02-Data-Flow-Diagrams.md` |
 | **Security** | `SECURITY.md` | Update `05-Security-Scan-Results.md`, `00-Intake-Readiness-Guide.md` |
@@ -101,8 +101,8 @@ Document findings in a structured format:
 1. [Change 1 - what was added/modified/removed]
 2. [Change 2 - ...]
 
-#### Impact on WU Documentation:
-- [ ] [WU Doc file] - [specific section to update] - [what to change]
+#### Impact on External Documentation:
+- [ ] [External Doc file] - [specific section to update] - [what to change]
 ```
 
 ---
@@ -111,7 +111,7 @@ Document findings in a structured format:
 
 ### Step 3.1: Review CHANGELOG for Context
 
-Check CHANGELOG.md for user-facing changes that should be reflected in WU Documentation:
+Check CHANGELOG.md for user-facing changes that should be reflected in External Documentation:
 
 ```bash
 git diff $LAST_COMMIT HEAD -- CHANGELOG.md
@@ -122,11 +122,11 @@ Pay special attention to:
 - **Added** - New features that need documentation in Executive Summary
 - **Changed** - Architectural changes that affect diagrams
 - **Security** - Any security-related changes for Security Scan Results
-- **Removed** - Deprecated features to remove from WU docs
+- **Removed** - Deprecated features to remove from external docs
 
 ### Step 3.2: Review DRIFT-LOG for Deviations
 
-Check DRIFT-LOG.md for any deviations from canonical docs that affect WU Documentation:
+Check DRIFT-LOG.md for any deviations from canonical docs that affect External Documentation:
 
 ```bash
 git diff $LAST_COMMIT HEAD -- docs-implementation/DRIFT-LOG.md
@@ -140,39 +140,39 @@ Flag any drift entries with status:
 
 ---
 
-## Phase 4: Update WU Documentation
+## Phase 4: Update External Documentation
 
 ### Step 4.1: Create Change Manifest
 
 Before making changes, create a manifest of all planned updates:
 
 ```markdown
-## WU Documentation Update Manifest
+## External Documentation Update Manifest
 
 **Sync Date:** [YYYY-MM-DD]
 **Commit Range:** [last_commit]..[current_commit]
 
 ### Planned Updates:
 
-| WU Document | Section | Change Type | Source Reference |
+| External Document | Section | Change Type | Source Reference |
 |-------------|---------|-------------|------------------|
 | [doc name] | [section] | ADD/MODIFY/REMOVE | [source file:line] |
 ```
 
-### Step 4.2: Update Each WU Document
+### Step 4.2: Update Each External Document
 
 For each document in the manifest, perform updates following this checklist:
 
 #### Per-Document Checklist
 
 - [ ] **Open source file(s)** - Review the exact wording and technical details
-- [ ] **Open WU document** - Locate the section to update
+- [ ] **Open external document** - Locate the section to update
 - [ ] **Verify accuracy** - Ensure change matches current implementation
-- [ ] **Maintain formatting** - Follow existing markdown conventions in WU docs
+- [ ] **Maintain formatting** - Follow existing markdown conventions in external docs
 - [ ] **Update timestamps** - Change "Last Updated" date at bottom of file
-- [ ] **Cross-reference** - Check if change affects other WU documents
+- [ ] **Cross-reference** - Check if change affects other external documents
 
-#### WU Document-Specific Guidelines
+#### External Document-Specific Guidelines
 
 **00-Intake-Readiness-Guide.md:**
 
@@ -237,10 +237,10 @@ For each document in the manifest, perform updates following this checklist:
 
 ### Step 5.1: Verify All Updates Applied
 
-Run a diff on WU Documentation folder to see all changes:
+Run a diff on External Documentation folder to see all changes:
 
 ```bash
-git diff --stat -- "WU Documentation/"
+git diff --stat -- "External Documentation/"
 ```
 
 ### Step 5.2: Markdown Lint Check
@@ -248,12 +248,12 @@ git diff --stat -- "WU Documentation/"
 Run markdown linting on updated files (if linter available):
 
 ```bash
-npx markdownlint "WU Documentation/*.md" --config "WU Documentation/.markdownlint.json"
+npx markdownlint "External Documentation/*.md" --config "External Documentation/.markdownlint.json"
 ```
 
 ### Step 5.3: Cross-Reference Final Check
 
-Verify consistency across WU documents:
+Verify consistency across external documents:
 
 | Check | Status |
 |-------|--------|
@@ -279,7 +279,7 @@ Create a summary of all changes made:
 - docs-canonical/: X files
 - docs-implementation/: X files
 
-### WU Documentation Updates
+### External Documentation Updates
 
 | Document | Sections Updated | Change Type |
 |----------|-----------------|-------------|
@@ -300,12 +300,12 @@ git rev-parse HEAD > .agent/doc-sync-last-run.txt
 
 ### Step 5.6: Commit Changes (After Approval)
 
-Stage and commit all WU Documentation changes:
+Stage and commit all External Documentation changes:
 
 ```bash
-git add "WU Documentation/"
+git add "External Documentation/"
 git add .agent/doc-sync-last-run.txt
-git commit -m "docs(wu): sync WU documentation with source changes
+git commit -m "docs(external): sync external documentation with source changes
 
 Synced changes from docs/, docs-canonical/, docs-implementation/
 Commit range: [last_commit]..[current_commit]"
@@ -321,7 +321,7 @@ If git diff returns no changes, verify:
 
 1. Marker file has correct commit hash
 2. Documentation files haven't been moved
-3. Check if changes were made directly to WU docs (would be outside this sync)
+3. Check if changes were made directly to external docs (would be outside this sync)
 
 ### Large Number of Changes
 
@@ -331,9 +331,9 @@ If >20 files changed:
 2. Prioritize by category (Security first, then Architecture, etc.)
 3. Create sub-manifests per phase
 
-### Merge Conflicts in WU Docs
+### Merge Conflicts in External Docs
 
-If WU docs have been edited manually since last sync:
+If external docs have been edited manually since last sync:
 
 1. Review manual changes first
 2. Merge manual and synced changes carefully
@@ -341,9 +341,9 @@ If WU docs have been edited manually since last sync:
 
 ---
 
-## Quick Reference: Source → WU Document Mapping
+## Quick Reference: Source → External Document Mapping
 
-| Source File | Primary WU Target(s) |
+| Source File | Primary External Target(s) |
 |-------------|---------------------|
 | `ARCHITECTURE.md` | 01-Architecture, 02-Data-Flow |
 | `DATA-MODEL.md` | 08-Data-Schema |

@@ -66,7 +66,7 @@ That's it. One paragraph. Antigravity built the entire thing.
 **What it is:** A live production system handling real customer messages in real-time, with CRM, agent management, SLA tracking, and performance dashboards.
 
 **What the user said:**
-> *"I need a WhatsApp inbox system where agents can see incoming messages, respond, manage contacts, and track SLA performance."*
+> *"I need a customer support inbox system where agents can see incoming messages, respond, manage contacts, and track SLA performance."*
 
 ![Customer Support Inbox](../images/gallery-strategy-presentation.png)
 
